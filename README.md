@@ -16,10 +16,10 @@ To install the stable version:
 
 ```
 # NPM
-npm install chess.js
+npm install GoldenChrysus/chess.js
 
 # Yarn
-yarn add chess.js
+yarn add GoldenChrysus/chess.js
 ```
 
 ## Example Code
