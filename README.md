@@ -1,4 +1,4 @@
-# chess.js
+# chess.js - en passant FEN fix
 
 [![Build Status](https://travis-ci.org/jhlywa/chess.js.svg?branch=master)](https://travis-ci.org/jhlywa/chess.js)
 
