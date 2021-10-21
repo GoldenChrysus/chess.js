@@ -8,6 +8,8 @@ detection - basically everything but the AI.
 
 chess.js has been extensively tested in node.js and most modern browsers.
 
+This fork of chess.js will only provide the en passant square in the FEN if the en passant capture is a legal move. Will attempt to keep the fork up to date with the upstream.
+
 ## Installation
 
 To install the stable version:
