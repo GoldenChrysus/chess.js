@@ -359,9 +359,12 @@ var Chess = function (fen) {
     return { valid: true, error_number: 0, error: errors[0] }
   }
 
-  function generate_fen() {
+  function generate_fen(options) {
     var empty = 0
     var fen = ''
+    const fix_ep = (typeof options !== 'undefined' && 'fix_ep' in options)
+        ? options.fix_ep
+        : false
 
     for (var i = SQUARES.a8; i <= SQUARES.h1; i++) {
       if (board[i] == null) {
@@ -391,6 +394,30 @@ var Chess = function (fen) {
       }
     }
 
+    let fen_ep_square = ep_square;
+
+    if (fix_ep && fen_ep_square !== EMPTY) {
+      let found_ep = false
+      const legal_moves = generate_moves({
+        legal : true,
+        piece : 'p'
+      })
+
+      for (const i in legal_moves) {
+        const legal_move = legal_moves[i]
+
+        if (legal_move.flags & BITS.EP_CAPTURE) {
+          found_ep = true
+
+          break
+        }
+      }
+
+      if (!found_ep) {
+        fen_ep_square = EMPTY
+      }
+    }
+
     var cflags = ''
     if (castling[WHITE] & BITS.KSIDE_CASTLE) {
       cflags += 'K'
@@ -407,7 +434,7 @@ var Chess = function (fen) {
 
     /* do we have an empty castling flag? */
     cflags = cflags || '-'
-    var epflags = ep_square === EMPTY ? '-' : algebraic(ep_square)
+    var epflags = fen_ep_square === EMPTY ? '-' : algebraic(fen_ep_square)
 
     return [fen, turn, cflags, epflags, half_moves, move_number].join(' ')
   }
@@ -1437,7 +1464,7 @@ var Chess = function (fen) {
     },
 
     fen: function () {
-      return generate_fen()
+      return generate_fen({ fix_ep: true })
     },
 
     board: function () {
