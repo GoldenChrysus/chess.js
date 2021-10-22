@@ -176,18 +176,32 @@ chess.get_comments()
 ```
 ### .fen()
 
-Returns the FEN string for the current position.
+Returns the FEN string for the current position. The en passant square is only populated when the en passant capture is a legal move.
 
 ```js
 const chess = new Chess()
 
-// make some moves
+// make some moves; no legal en passant
 chess.move('e4')
 chess.move('e5')
 chess.move('f4')
 
 chess.fen()
-// -> 'rnbqkbnr/pppp1ppp/8/4p3/4PP2/8/PPPP2PP/RNBQKBNR b KQkq f3 0 2'
+// -> 'rnbqkbnr/pppp1ppp/8/4p3/4PP2/8/PPPP2PP/RNBQKBNR b KQkq - 0 2'
+```
+
+```js
+const chess = new Chess()
+
+// make some moves; legal en passant
+chess.move('a4')
+chess.move('b5')
+chess.move('d4')
+chess.move('b4')
+chess.move('c4')
+
+chess.fen()
+// -> 'rnbqkbnr/p1pppppp/8/8/PpPP4/8/1P2PPPP/RNBQKBNR b KQkq c3 0 3'
 ```
 
 ### .game_over()
